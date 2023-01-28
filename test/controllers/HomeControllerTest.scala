@@ -64,12 +64,6 @@ class HomeControllerTest
       status(result) mustBe OK
       contentType(result) mustBe Some("application/json")
       contentAsJson(result) mustBe successResponse
-
-      (contentAsJson(result) \ "name").as[String] mustBe "Kodumuru"
-      (contentAsJson(result) \ "location" \ "lat")
-        .as[Double] mustBe 51.244031
-      (contentAsJson(result) \ "location" \ "long")
-        .as[Double] mustBe -1.263224
     }
 
     "return error json object for invalid place json request" in {
