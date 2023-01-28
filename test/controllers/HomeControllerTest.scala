@@ -55,12 +55,15 @@ class HomeControllerTest
         }
       }
       """)
+      val successResponse = Json.parse("""
+          |{"message":"Place 'Kodumuru' saved."}
+          |""".stripMargin)
       val request = FakeRequest(POST, "/places").withJsonBody(json)
       val result = route(app, request).get
 
       status(result) mustBe OK
       contentType(result) mustBe Some("application/json")
-      contentAsJson(result) mustBe json
+      contentAsJson(result) mustBe successResponse
 
       (contentAsJson(result) \ "name").as[String] mustBe "Kodumuru"
       (contentAsJson(result) \ "location" \ "lat")
@@ -93,7 +96,7 @@ class HomeControllerTest
       val request = FakeRequest(POST, "/places").withJsonBody(json)
       val result = route(app, request).get
 
-      status(result) mustBe OK
+      status(result) mustBe BAD_REQUEST
       contentType(result) mustBe Some("application/json")
       contentAsJson(result) mustBe errorjson
     }
